@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Morpho — Interactive explainer</title>
+<style>
+  html, body { margin:0; padding:0; background:#F9FAFB; color:#15181A; font-family: "FK Grotesk", "Inter", system-ui, sans-serif; }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { overflow-x: hidden; }
+  /* Custom scrollbar for the interactive feel */
+  ::selection { background: #2C6BED33; }
+</style>
+
+<!-- Pinned React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<template id="__bundler_thumbnail" data-bg-color="#F9FAFB">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#F3F4F8"/>
+  <g transform="translate(60,60)">
+    <rect x="0" y="0" width="22" height="28" rx="4" fill="#2C6BED"/>
+    <rect x="30" y="0" width="22" height="28" rx="4" fill="#A78BFA"/>
+    <rect x="60" y="0" width="22" height="28" rx="4" fill="#E15566"/>
+    <path d="M 11 32 Q 11 50 41 50 T 71 32" stroke="#15181A" stroke-width="2" fill="none"/>
+    <rect x="16" y="56" width="50" height="22" rx="4" fill="#15181A"/>
+  </g>
+</svg>
+</template>
+
+<!-- Animation engine (provides TimelineContext, Sprite, etc.) -->
+<script type="text/babel" src="animations.jsx"></script>
+
+<!-- Shared tokens + vault/market components -->
+<script type="text/babel" src="shared.jsx"></script>
+
+<!-- Modules (reused as-is) -->
+<script type="text/babel" src="module0.jsx"></script>
+<script type="text/babel" src="module1.jsx"></script>
+<script type="text/babel" src="module2.jsx"></script>
+
+<!-- Interactive scroll-driven shell -->
+<script type="text/babel" src="interactive.jsx"></script>
+</body>
+</html>

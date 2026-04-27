@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Morpho — Risk, Liquidity & IRM explainer</title>
+<style>
+  html, body { margin:0; padding:0; background:#0A0B0D; color:#EFF2FA; font-family: "FK Grotesk", "Inter", system-ui, sans-serif; overscroll-behavior: none; }
+  #root { position: fixed; inset: 0; }
+  *, *::before, *::after { box-sizing: border-box; }
+</style>
+
+<!-- Pinned React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#F3F4F8"/>
+  <g transform="translate(60,60)">
+    <rect x="0" y="0" width="22" height="28" rx="4" fill="#2C6BED"/>
+    <rect x="30" y="0" width="22" height="28" rx="4" fill="#A78BFA"/>
+    <rect x="60" y="0" width="22" height="28" rx="4" fill="#E15566"/>
+    <path d="M 11 32 Q 11 50 41 50 T 71 32" stroke="#15181A" stroke-width="2" fill="none"/>
+    <rect x="16" y="56" width="50" height="22" rx="4" fill="#15181A"/>
+  </g>
+</svg>
+</template>
+
+<!-- Animation engine + design canvas -->
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<!-- Shared tokens + vault/market components -->
+<script type="text/babel" src="shared.jsx"></script>
+
+<!-- Modules -->
+<script type="text/babel" src="module0.jsx"></script>
+<script type="text/babel" src="module1.jsx"></script>
+<script type="text/babel" src="module2.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+/* ──────────────────────────────────────────────────────────────
+   Root app — two artboards:
+     • Module 1 (20s) — Credit risk isolation
+     • Module 2 (40s) — Liquidity correlations + IRM response,
+       interleaved: liquidity → IRM → liquidity → IRM → liquidity.
+   ─────────────────────────────────────────────────────────────── */
+
+const MODULES = [
+  { id: 'm0', title: 'Module 0 · Overview of how lending works on Morpho', dur: 20, Comp: Module0 },
+  { id: 'm1', title: 'Module 1 · Bad Debt Isolation',                  dur: 20, Comp: Module1 },
+  { id: 'm2', title: 'Module 2 · Liquidity Correlations & IRM',        dur: 75, Comp: Module2 },
+];
+
+/* ──────────────────────────────────────────────────────────────
+   App
+   ─────────────────────────────────────────────────────────────── */
+function App() {
+  return (
+    <DesignCanvas title="Morpho — Risk, Liquidity & IRM" defaultBg="#0A0B0D">
+      <DCSection id="series" title="Explainer series">
+        {MODULES.map((m) => (
+          <DCArtboard key={m.id} id={m.id} label={m.title} width={1600} height={900}>
+            <div style={{position:'absolute', inset:0}}>
+              <Stage width={1600} height={900} duration={m.dur}
+                background={MORPHO.bg} persistKey={`morpho-${m.id}`}>
+                <m.Comp />
+              </Stage>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
